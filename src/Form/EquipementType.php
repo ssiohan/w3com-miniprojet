@@ -14,8 +14,7 @@ class EquipementType extends AbstractType
         $builder
             ->add('nomCourt')
             ->add('nomLong')
-            ->add('poids')
-        ;
+            ->add('poids');
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -45,10 +45,11 @@ class Equipement
 
     public function __toString(): ?string
     {
-        return $this->id . " - " . 
-        $this->nomCourt . " / " .
-        $this->nomLong . ' (' .
-        $this->poids . ' Kg)';
+        return
+            $this->id . " - " .
+            $this->nomCourt . " / " .
+            $this->nomLong . ' (' .
+            $this->poids . ' Kg)';
     }
 
     public function getId(): ?int

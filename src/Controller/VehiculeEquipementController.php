@@ -44,13 +44,7 @@ class VehiculeEquipementController extends AbstractController
                 'equipement' => $vehiculeEquipement->getEquipement()->getId()
             ])) !== null) {
                 $this->addFlash('alert', 'Ce véhicule possède déjà cet équipement !');
-                return $this->render('vehicule_equipement/new.html.twig', [
-                    'vehicule' => $vehiculeId,
-                    'vehicule_equipement' => $vehiculeEquipement,
-                    'form' => $form->createView(),
-                ]);
-            } else {       
-                         
+            } else {
                 // On affecte le vehicule actuellement modifié à $vehiculeEquipement
                 $vehicule = $em->getRepository(Vehicule::class)->findOneBy([
                     'id' => $vehiculeId

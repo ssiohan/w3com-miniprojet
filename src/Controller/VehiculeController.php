@@ -94,9 +94,9 @@ class VehiculeController extends AbstractController
     public function getVehiculeEquipements($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $vehiculeEquipements = 
-        $em->getRepository(VehiculeEquipement::class)->findBy(['vehicule' => $id]);
-        
+        $vehiculeEquipements =
+            $em->getRepository(VehiculeEquipement::class)->findBy(['vehicule' => $id]);
+
         return $vehiculeEquipements;
     }
 }

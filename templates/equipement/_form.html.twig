@@ -1,9 +1,9 @@
-		{{ form_start(form) }}
-		{{ form_label(form.nomCourt, 'Nom court') }}
-		{{ form_widget(form.nomCourt, {'attr': {'class': 'text-center mb-3'}}) }}
-		{{ form_label(form.nomLong, 'Nom long') }}
-		{{ form_widget(form.nomLong, {'attr': {'class': 'text-center mb-3'}}) }}
-		{{ form_label(form.poids, 'Poids (Kg)') }}
-		{{ form_widget(form.poids, {'attr': {'class': 'text-center mb-3'}}) }}
-		<button class="btn btn-success mx-auto d-flex justify-content-center m-3">Valider</button>
-		{{ form_end(form) }}
+{{ form_start(form) }}
+{{ form_label(form.nomCourt, 'Nom court') }}
+{{ form_widget(form.nomCourt, {'attr': {'class': 'text-center mb-3'}}) }}
+{{ form_label(form.nomLong, 'Nom long') }}
+{{ form_widget(form.nomLong, {'attr': {'class': 'text-center mb-3'}}) }}
+{{ form_label(form.poids, 'Poids (Kg)') }}
+{{ form_widget(form.poids, {'attr': {'class': 'text-center mb-3'}}) }}
+<button class="btn btn-success mx-auto d-flex justify-content-center m-3">Valider</button>
+{{ form_end(form) }}

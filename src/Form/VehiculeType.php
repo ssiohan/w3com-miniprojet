@@ -15,8 +15,7 @@ class VehiculeType extends AbstractType
             ->add('immat')
             ->add('marque')
             ->add('modele')
-            ->add('couleur')
-        ;
+            ->add('couleur');
     }
 
     public function configureOptions(OptionsResolver $resolver)
