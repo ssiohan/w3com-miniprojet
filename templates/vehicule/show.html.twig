@@ -47,14 +47,16 @@
 		<thead>
 			<tr>
 				<th>Id</th>
+				<th>Nom court</th>
 				<th>Nom long</th>
-				<th>Poids</th>
+				<th>Poids (Kg)</th>
 			</tr>
 		</thead>
 		<tbody>
 			{% for equipement in equipements|sort((a, b) => a.poids <=> b.poids) %}
 				<tr>
 					<td>{{ equipement.equipement.id }}</td>
+					<td>{{ equipement.equipement.nomCourt }}</td>
 					<td>{{ equipement.nomLong }}</td>
 					<td>{{ equipement.poids }}</td>
 				</tr>
