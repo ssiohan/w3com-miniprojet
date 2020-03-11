@@ -19,12 +19,12 @@ class Equipement
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $nom_court;
+    private $nomCourt;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $nom_long;
+    private $nomLong;
 
     /**
      * @ORM\Column(type="integer")
@@ -38,24 +38,24 @@ class Equipement
 
     public function getNomCourt(): ?string
     {
-        return $this->nom_court;
+        return $this->nomCourt;
     }
 
-    public function setNomCourt(string $nom_court): self
+    public function setNomCourt(string $nomCourt): self
     {
-        $this->nom_court = $nom_court;
+        $this->nomCourt = $nomCourt;
 
         return $this;
     }
 
     public function getNomLong(): ?string
     {
-        return $this->nom_long;
+        return $this->nomLong;
     }
 
-    public function setNomLong(string $nom_long): self
+    public function setNomLong(string $nomLong): self
     {
-        $this->nom_long = $nom_long;
+        $this->nomLong = $nomLong;
 
         return $this;
     }
