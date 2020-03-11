@@ -1,34 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Equipement{% endblock %}
+{% block title %}Détails de l'équipement
+{% endblock %}
 
 {% block body %}
-    <h1>Equipement</h1>
+	<h1 class="alert alert-info">Détails de l'équipement</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ equipement.id }}</td>
-            </tr>
-            <tr>
-                <th>NomCourt</th>
-                <td>{{ equipement.nomCourt }}</td>
-            </tr>
-            <tr>
-                <th>NomLong</th>
-                <td>{{ equipement.nomLong }}</td>
-            </tr>
-            <tr>
-                <th>Poids</th>
-                <td>{{ equipement.poids }}</td>
-            </tr>
-        </tbody>
-    </table>
+	<div class="d-flex justify-content-center m-3">
 
-    <a href="{{ path('equipement_index') }}">back to list</a>
+		<a href="{{ path('equipement_index') }}" class="btn btn-info mr-2">
+			<i class="fa fa-arrow-left" aria-hidden="true"></i>
+		</a>
+		<a href="{{ path('equipement_edit', {'id': equipement.id}) }}" class="btn btn-warning mr-2">
+			<i class="fa fa-pencil" aria-hidden="true"></i>
+		</a>
+		<form action="{{ path('equipement_delete', {'id': equipement.id}) }}" method="post">
+			<button type="submit" class="btn btn-danger">
+				<i class="fa fa-trash"></i>
+			</button>
+		</form>
+	</div>
 
-    <a href="{{ path('equipement_edit', {'id': equipement.id}) }}">edit</a>
-
-    {{ include('equipement/_delete_form.html.twig') }}
+	<table class="table d-flex justify-content-center">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ equipement.id }}</td>
+			</tr>
+			<tr>
+				<th>Nom Court</th>
+				<td>{{ equipement.nomCourt }}</td>
+			</tr>
+			<tr>
+				<th>Nom Long</th>
+				<td>{{ equipement.nomLong }}</td>
+			</tr>
+			<tr>
+				<th>Poids (Kg)</th>
+				<td>{{ equipement.poids }}</td>
+			</tr>
+		</tbody>
+	</table>
 {% endblock %}

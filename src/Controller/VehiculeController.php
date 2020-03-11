@@ -76,15 +76,13 @@ class VehiculeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="vehicule_delete", methods={"DELETE"})
+     * @Route("/{id}/delete", name="vehicule_delete", methods={"POST"})
      */
-    public function delete(Request $request, Vehicule $vehicule): Response
+    public function delete(Vehicule $vehicule): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$vehicule->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($vehicule);
-            $entityManager->flush();
-        }
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($vehicule);
+        $entityManager->flush();
 
         return $this->redirectToRoute('vehicule_index');
     }

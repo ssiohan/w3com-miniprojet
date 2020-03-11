@@ -1,39 +1,47 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Equipement index{% endblock %}
+{% block title %}Liste des équipements
+{% endblock %}
 
 {% block body %}
-    <h1>Equipement index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>NomCourt</th>
-                <th>NomLong</th>
-                <th>Poids</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for equipement in equipements %}
-            <tr>
-                <td>{{ equipement.id }}</td>
-                <td>{{ equipement.nomCourt }}</td>
-                <td>{{ equipement.nomLong }}</td>
-                <td>{{ equipement.poids }}</td>
-                <td>
-                    <a href="{{ path('equipement_show', {'id': equipement.id}) }}">show</a>
-                    <a href="{{ path('equipement_edit', {'id': equipement.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('equipement_new') }}">Create new</a>
+	<h1 class="alert alert-info">Liste des équipements</h1>
+	<a class="btn btn-primary m-3" href="{{ path('equipement_new') }}">Créer un nouvel équipement</a>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Nom Court</th>
+				<th>Nom Long</th>
+				<th>Poids (kg)</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for equipement in equipements %}
+				<tr>
+					<td>{{ equipement.id }}</td>
+					<td>{{ equipement.nomCourt }}</td>
+					<td>{{ equipement.nomLong }}</td>
+					<td>{{ equipement.poids }}</td>
+					<td class="d-flex justify-content-center">
+						<a href="{{ path('equipement_show', {'id': equipement.id}) }}" class="btn btn-info mr-2">
+							<i class="fa fa-eye" aria-hidden="true"></i>
+						</a>
+						<a href="{{ path('equipement_edit', {'id': equipement.id}) }}" class="btn btn-warning mr-2">
+							<i class="fa fa-pencil" aria-hidden="true"></i>
+						</a>
+						<form action="{{ path('equipement_delete', {'id': equipement.id}) }}" method="post">
+							<button type="submit" class="btn btn-danger">
+								<i class="fa fa-trash"></i>
+							</button>
+						</form>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="5" class="alert alert-danger">Aucun équipement trouvé !</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 {% endblock %}

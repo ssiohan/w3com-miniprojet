@@ -1,41 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Vehicule index{% endblock %}
+{% block title %}Liste des véhicules
+{% endblock %}
 
 {% block body %}
-    <h1>Vehicule index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Immat</th>
-                <th>Marque</th>
-                <th>Modele</th>
-                <th>Couleur</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for vehicule in vehicules %}
-            <tr>
-                <td>{{ vehicule.id }}</td>
-                <td>{{ vehicule.immat }}</td>
-                <td>{{ vehicule.marque }}</td>
-                <td>{{ vehicule.modele }}</td>
-                <td>{{ vehicule.couleur }}</td>
-                <td>
-                    <a href="{{ path('vehicule_show', {'id': vehicule.id}) }}">show</a>
-                    <a href="{{ path('vehicule_edit', {'id': vehicule.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('vehicule_new') }}">Create new</a>
+	<h1 class="alert alert-info">Liste des véhicules</h1>
+	<a class="btn btn-primary m-3" href="{{ path('vehicule_new') }}">Créer un nouveau véhicule</a>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Immatriculation</th>
+				<th>Marque</th>
+				<th>Modele</th>
+				<th>Couleur</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for vehicule in vehicules %}
+				<tr>
+					<td>{{ vehicule.id }}</td>
+					<td>{{ vehicule.immat }}</td>
+					<td>{{ vehicule.marque }}</td>
+					<td>{{ vehicule.modele }}</td>
+					<td>{{ vehicule.couleur }}</td>
+					<td class="d-flex justify-content-center">
+						<a href="{{ path('vehicule_show', {'id': vehicule.id}) }}" class="btn btn-info mr-2">
+							<i class="fa fa-eye" aria-hidden="true"></i>
+						</a>
+						<a href="{{ path('vehicule_edit', {'id': vehicule.id}) }}" class="btn btn-warning mr-2">
+							<i class="fa fa-pencil" aria-hidden="true"></i>
+						</a>
+						<form action="{{ path('vehicule_delete', {'id': vehicule.id}) }}" method="post">
+							<button type="submit" class="btn btn-danger">
+								<i class="fa fa-trash"></i>
+							</button>
+						</form>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="6" class="alert alert-danger">Aucun véhicule trouvé !</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 {% endblock %}
