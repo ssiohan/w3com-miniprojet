@@ -29,7 +29,7 @@ class Equipement
     private $nomLong;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="decimal", precision=5, scale=2)
      */
     private $poids;
 
@@ -41,6 +41,11 @@ class Equipement
     public function __construct()
     {
         $this->equipementVehicule = new ArrayCollection();
+    }
+
+    public function __toString(): ?string
+    {
+        return $this->id;
     }
 
     public function getId(): ?int
@@ -72,12 +77,12 @@ class Equipement
         return $this;
     }
 
-    public function getPoids(): ?int
+    public function getPoids(): ?string
     {
         return $this->poids;
     }
 
-    public function setPoids(int $poids): self
+    public function setPoids(string $poids): self
     {
         $this->poids = $poids;
 

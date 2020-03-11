@@ -4,9 +4,9 @@
 {% endblock %}
 
 {% block body %}
-	<h1 class="alert alert-info">Détails du véhicule</h1>
+	<h1 class="alert alert-info text-center">Détails du véhicule</h1>
 
-    <div class="d-flex justify-content-center m-3">
+	<div class="d-flex justify-content-center m-3">
 
 		<a href="{{ path('vehicule_index') }}" class="btn btn-info mr-2">
 			<i class="fa fa-arrow-left" aria-hidden="true"></i>
@@ -43,6 +43,32 @@
 				<th>Couleur</th>
 				<td>{{ vehicule.couleur }}</td>
 			</tr>
+		</tbody>
+	</table>
+	<h3 class="alert alert-secondary text-center">Equipements présents sur ce véhicule</h3>
+	<table class="table text-center">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Nom Long</th>
+				<th>Poids</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for equipement in equipements %}
+            <pre>
+                {{ dump(equipement) }}
+            </pre>
+				<tr>
+					<td>{{ equipement.equipement.id }}</td>
+					<td>{{ equipement.nomLong }}</td>
+					<td>{{ equipement.poids }}</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="6" class="alert alert-danger">Aucun équipement présent sur ce véhicule !</td>
+				</tr>
+			{% endfor %}
 		</tbody>
 	</table>
 

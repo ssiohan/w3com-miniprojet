@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Vehicule;
+use App\Entity\VehiculeEquipement;
 use App\Form\VehiculeType;
 use App\Repository\VehiculeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -46,20 +47,22 @@ class VehiculeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="vehicule_show", methods={"GET"})
+     * @Route("/vehicule/{id}", name="vehicule_show", methods={"GET"})
      */
-    public function show(Vehicule $vehicule): Response
+    public function show(Vehicule $vehicule, $id): Response
     {
         return $this->render('vehicule/show.html.twig', [
             'vehicule' => $vehicule,
+            'equipements' => $this->getVehiculeEquipements($id),
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="vehicule_edit", methods={"GET","POST"})
+     * @Route("/vehicule/{id}/edit", name="vehicule_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Vehicule $vehicule): Response
+    public function edit(Request $request, Vehicule $vehicule, $id): Response
     {
+
         $form = $this->createForm(VehiculeType::class, $vehicule);
         $form->handleRequest($request);
 
@@ -71,12 +74,13 @@ class VehiculeController extends AbstractController
 
         return $this->render('vehicule/edit.html.twig', [
             'vehicule' => $vehicule,
+            'equipements' => $this->getVehiculeEquipements($id),
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}/delete", name="vehicule_delete", methods={"POST"})
+     * @Route("/vehicule/{id}/delete", name="vehicule_delete", methods={"POST"})
      */
     public function delete(Vehicule $vehicule): Response
     {
@@ -85,5 +89,14 @@ class VehiculeController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute('vehicule_index');
+    }
+
+    public function getVehiculeEquipements($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $vehiculeEquipements = 
+        $em->getRepository(VehiculeEquipement::class)->findBy(['vehicule' => $id]);
+        
+        return $vehiculeEquipements;
     }
 }

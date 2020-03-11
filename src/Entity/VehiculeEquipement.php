@@ -30,7 +30,7 @@ class VehiculeEquipement
     private $nomLong;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="decimal", precision=5, scale=2)
      */
     private $poids;
 
@@ -51,12 +51,12 @@ class VehiculeEquipement
         return $this;
     }
 
-    public function getPoids(): ?int
+    public function getPoids(): ?string
     {
         return $this->poids;
     }
 
-    public function setPoids(int $poids): self
+    public function setPoids(string $poids): self
     {
         $this->poids = $poids;
 

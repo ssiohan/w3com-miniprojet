@@ -1,10 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edition de l'équipement{% endblock %}
+{% block title %}Edition de l'équipement
+{% endblock %}
 
 {% block body %}
-    <h1 class="alert alert-info">Edition de l'équipement</h1>
+	<h1 class="alert alert-info text-center">Edition de l'équipement</h1>
 
-    {{ include('equipement/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+	{{ form_start(form) }}
+	{{ form_widget(form) }}
+	<button class="btn btn-success mx-auto d-flex justify-content-center m-3">{{ button_label|default('Enregistrer') }}</button>
+	{{ form_end(form) }}
 
 {% endblock %}
