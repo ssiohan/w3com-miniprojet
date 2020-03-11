@@ -6,19 +6,24 @@
 {% block body %}
 	<h1 class="alert alert-info text-center">Edition du véhicule</h1>
 
-	{{ form_start(form) }}
-	{{ form_widget(form) }}
-	<button class="btn btn-success mx-auto d-flex justify-content-center m-3">{{ button_label|default('Enregistrer') }}</button>
-	{{ form_end(form) }}
+	<div class="container col-12 text-center">
+		{% include "vehicule/_form.html.twig" %}
+	</div>
 
-	<h3 class="alert alert-secondary text-center">Equipements présents sur ce véhicule</h3>
+	<h3 class="alert alert-secondary text-center d-flex justify-content-center">Equipements présents</h3>
 	<table class="table text-center">
 		<thead>
 			<tr>
 				<th>Id</th>
 				<th>Nom Long</th>
 				<th>Poids</th>
-				<th>Actions</th>
+				<th>
+					<form class="text-center" action="{{ path('vehicule_equipement_new') }}" method="post">
+						<button type="submit" class="btn btn-success">
+							<i class="fa fa-plus fa-lg"></i>
+						</button>
+					</form>
+				</th>
 			</tr>
 		</thead>
 		<tbody>

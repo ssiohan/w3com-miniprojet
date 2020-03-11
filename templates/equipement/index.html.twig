@@ -6,7 +6,7 @@
 {% block body %}
 	<h1 class="alert alert-info text-center">Liste des équipements</h1>
 	<a class="btn btn-primary d-flex justify-content-center m-2" href="{{ path('equipement_new') }}">Créer un nouvel équipement</a>
-	<table class="table">
+	<table class="table text-center">
 		<thead>
 			<tr>
 				<th>Id</th>
@@ -25,14 +25,14 @@
 					<td>{{ equipement.poids }}</td>
 					<td class="d-flex justify-content-center">
 						<a href="{{ path('equipement_show', {'id': equipement.id}) }}" class="btn btn-info mr-2">
-							<i class="fa fa-eye" aria-hidden="true"></i>
+							<i class="fa fa-eye fa-lg" aria-hidden="true"></i>
 						</a>
 						<a href="{{ path('equipement_edit', {'id': equipement.id}) }}" class="btn btn-warning mr-2">
-							<i class="fa fa-pencil" aria-hidden="true"></i>
+							<i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
 						</a>
 						<form action="{{ path('equipement_delete', {'id': equipement.id}) }}" method="post">
 							<button type="submit" class="btn btn-danger">
-								<i class="fa fa-trash"></i>
+								<i class="fa fa-trash fa-lg"></i>
 							</button>
 						</form>
 					</td>

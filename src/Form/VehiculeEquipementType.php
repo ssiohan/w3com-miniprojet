@@ -12,11 +12,10 @@ class VehiculeEquipementType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nomLong')
-            ->add('poids')
             ->add('vehicule')
             ->add('equipement')
-        ;
+            ->add('nomLong')
+            ->add('poids');
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -48,7 +48,7 @@ class Vehicule
         $this->vehiculeEquipements = new ArrayCollection();
     }
 
-    public function __toString()
+    public function __toString(): ?string
     {
         return $this->id;
     }

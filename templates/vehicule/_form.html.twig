@@ -1,0 +1,11 @@
+{{ form_start(form) }}
+{{ form_label(form.immat, 'Immatriculation') }}
+{{ form_widget(form.immat, {'attr': {'class': 'text-center mb-3'}}) }}
+{{ form_label(form.marque, 'Marque') }}
+{{ form_widget(form.marque, {'attr': {'class': 'text-center mb-3'}}) }}
+{{ form_label(form.modele, 'Modèle') }}
+{{ form_widget(form.modele, {'attr': {'class': 'text-center mb-3'}}) }}
+{{ form_label(form.couleur, 'Couleur') }}
+{{ form_widget(form.couleur, {'attr': {'class': 'text-center mb-3'}}) }}
+<button class="btn btn-success mx-auto d-flex justify-content-center m-3">Valider</button>
+{{ form_end(form) }}

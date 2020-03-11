@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\VehiculeEquipement;
-use App\Form\VehiculeEquipement1Type;
+use App\Form\VehiculeEquipementType;
 use App\Repository\VehiculeEquipementRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,12 +26,12 @@ class VehiculeEquipementController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="vehicule_equipement_new", methods={"GET","POST"})
+     * @Route("/new", name="vehicule_equipement_new", methods={"POST"})
      */
     public function new(Request $request): Response
     {
         $vehiculeEquipement = new VehiculeEquipement();
-        $form = $this->createForm(VehiculeEquipement1Type::class, $vehiculeEquipement);
+        $form = $this->createForm(VehiculeEquipementType::class, $vehiculeEquipement);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -63,7 +63,7 @@ class VehiculeEquipementController extends AbstractController
      */
     public function edit(Request $request, VehiculeEquipement $vehiculeEquipement): Response
     {
-        $form = $this->createForm(VehiculeEquipement1Type::class, $vehiculeEquipement);
+        $form = $this->createForm(VehiculeEquipementType::class, $vehiculeEquipement);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
