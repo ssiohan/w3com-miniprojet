@@ -1,13 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit VehiculeEquipement{% endblock %}
+{% block title %}Editer l'équipement
+{% endblock %}
 
 {% block body %}
-    <h1>Edit VehiculeEquipement</h1>
+	<h1 class="alert alert-info text-center">Edition d'un équipement sur le véhicule</h1>
+	<div class="d-flex justify-content-center m-3">
+		<a href="{{ path('vehicule_edit', {'id': vehicule}) }}" class="btn btn-info mr-2">
+			<i class="fa fa-arrow-left" aria-hidden="true"></i>
+		</a>
+	</div>
+	{% for message in app.flashes('alert') %}
+		<div class="flash-alert alert alert-danger text-center">
+			{{ message }}
+		</div>
+	{% endfor %}
+	{% for message in app.flashes('success') %}
+		<div class="flash-alert alert alert-success text-center">
+			{{ message }}
+		</div>
+	{% endfor %}
+	<div class="container col-10 text-center">
+		{{ include('vehicule_equipement/_form-edit.html.twig') }}
+	</div>
 
-    {{ include('vehicule_equipement/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('vehicule_equipement_index') }}">back to list</a>
-
-    {{ include('vehicule_equipement/_delete_form.html.twig') }}
 {% endblock %}

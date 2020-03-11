@@ -5,9 +5,7 @@
 
 {% block body %}
 	<h1 class="alert alert-info text-center">Détails du véhicule</h1>
-
 	<div class="d-flex justify-content-center m-3">
-
 		<a href="{{ path('vehicule_index') }}" class="btn btn-info mr-2">
 			<i class="fa fa-arrow-left" aria-hidden="true"></i>
 		</a>
@@ -20,7 +18,6 @@
 			</button>
 		</form>
 	</div>
-
 	<table class="table d-flex justify-content-center">
 		<tbody>
 			<tr>
@@ -50,15 +47,12 @@
 		<thead>
 			<tr>
 				<th>Id</th>
-				<th>Nom Long</th>
+				<th>Nom long</th>
 				<th>Poids</th>
 			</tr>
 		</thead>
 		<tbody>
-			{% for equipement in equipements %}
-            <pre>
-                {{ dump(equipement) }}
-            </pre>
+			{% for equipement in equipements|sort((a, b) => a.poids <=> b.poids) %}
 				<tr>
 					<td>{{ equipement.equipement.id }}</td>
 					<td>{{ equipement.nomLong }}</td>
@@ -66,11 +60,9 @@
 				</tr>
 			{% else %}
 				<tr>
-					<td colspan="6" class="alert alert-danger">Aucun équipement présent sur ce véhicule !</td>
+					<td colspan="6" class="alert alert-warning">Aucun équipement présent sur ce véhicule !</td>
 				</tr>
 			{% endfor %}
 		</tbody>
 	</table>
-
-
 {% endblock %}

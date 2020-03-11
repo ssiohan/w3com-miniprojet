@@ -45,21 +45,26 @@ class VehiculeEquipementController extends AbstractController
             ])) !== null) {
                 $this->addFlash('alert', 'Ce véhicule possède déjà cet équipement !');
                 return $this->render('vehicule_equipement/new.html.twig', [
+                    'vehicule' => $vehiculeId,
                     'vehicule_equipement' => $vehiculeEquipement,
                     'form' => $form->createView(),
                 ]);
-            } else {
-                // On affecte à le vehicule actuellement modifié à $vehiculeEquipement
+            } else {       
+                         
+                // On affecte le vehicule actuellement modifié à $vehiculeEquipement
                 $vehicule = $em->getRepository(Vehicule::class)->findOneBy([
                     'id' => $vehiculeId
                 ]);
-                $vehiculeEquipement->setVehicule($vehicule);
-
-                // On affecte ne nouvel équipement selectionné à $vehiculeEquipement
                 $equipement = $em->getRepository(Equipement::class)->findOneBy([
                     'id' => $vehiculeEquipement->getEquipement()->getId()
                 ]);
-                $vehiculeEquipement->setEquipement($equipement);
+
+                $vehiculeEquipement
+                    ->setVehicule($vehicule)
+                    ->setEquipement($equipement)
+                    ->setNomLong($equipement->getNomLong())
+                    ->setPoids($equipement->getPoids());
+
                 $em->persist($vehiculeEquipement);
                 $em->flush();
 
@@ -67,6 +72,7 @@ class VehiculeEquipementController extends AbstractController
             }
         }
         return $this->render('vehicule_equipement/new.html.twig', [
+            'vehicule' => $vehiculeId,
             'vehicule_equipement' => $vehiculeEquipement,
             'form' => $form->createView(),
         ]);
@@ -83,20 +89,28 @@ class VehiculeEquipementController extends AbstractController
     }
 
     /**
-     * @Route("/{vehicule}/edit", name="vehicule_equipement_edit", methods={"GET","POST"})
+     * @Route("/{vehicule}/edit/{equipement}", name="vehicule_equipement_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, VehiculeEquipement $vehiculeEquipement): Response
+    public function edit(Request $request, VehiculeEquipement $vehiculeEquipement, $equipement, $vehicule): Response
     {
         $form = $this->createForm(VehiculeEquipementType::class, $vehiculeEquipement);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            // On affecte la modification de l'equipement à $vehiculeEquipement
+            $equipementToUpdate = $em->getRepository(Equipement::class)->findOneBy([
+                'id' => $equipement
+            ]);
+            $vehiculeEquipement->setEquipement($equipementToUpdate);
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('vehicule_equipement_index');
+            $this->addFlash('success', 'Cet équipement a bien été modifié !');
         }
 
         return $this->render('vehicule_equipement/edit.html.twig', [
+            'vehicule' => $vehicule,
             'vehicule_equipement' => $vehiculeEquipement,
             'form' => $form->createView(),
         ]);
@@ -116,8 +130,9 @@ class VehiculeEquipementController extends AbstractController
         $em->remove($equipementToDelete);
         $em->flush();
 
-        return $this->redirectToRoute('vehicule_edit',
-        ['id' => $vehicule]
-    );
+        return $this->redirectToRoute(
+            'vehicule_edit',
+            ['id' => $vehicule]
+        );
     }
 }

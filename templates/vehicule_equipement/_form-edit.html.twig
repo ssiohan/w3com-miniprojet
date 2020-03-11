@@ -1,9 +1,10 @@
 {{ form_start(form) }}
-{{ form_label(form.equipement, 'Equipement') }}
-{{ form_widget(form.equipement, {'attr': {'class': 'text-center mb-3'}}) }}
+{# {{ form_label(form.equipement, 'Selectionnez un équipement dans la liste puis validez pour l\'ajouter au véhicule') }}
+{{ form_widget(form.equipement, {'attr': {'class': 'text-center mb-3'}}) }} #}
+{% do form.equipement.setRendered() %}
 {{ form_label(form.nomLong, 'Nom long') }}
 {{ form_widget(form.nomLong, {'attr': {'class': 'text-center mb-3'}}) }}
-{{ form_label(form.poids, 'poids') }}
+{{ form_label(form.poids, 'Poids (Kg)') }}
 {{ form_widget(form.poids, {'attr': {'class': 'text-center mb-3'}}) }}
 <button class="btn btn-success mx-auto d-flex justify-content-center m-3">Valider</button>
 {{ form_end(form) }}

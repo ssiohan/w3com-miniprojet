@@ -1,10 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajouter équipement
+{% block title %}Ajout d'équipement
 {% endblock %}
 
 {% block body %}
 	<h1 class="alert alert-info text-center">Ajout d'un équipement sur le véhicule</h1>
+    	<div class="d-flex justify-content-center m-3">
+		<a href="{{ path('vehicule_edit', {'id': vehicule}) }}" class="btn btn-info mr-2">
+			<i class="fa fa-arrow-left" aria-hidden="true"></i>
+		</a>
+	</div>
 	{% for message in app.flashes('alert') %}
 		<div class="flash-alert alert alert-danger text-center">
 			{{ message }}
@@ -15,8 +20,8 @@
 			{{ message }}
 		</div>
 	{% endfor %}
-	<div class="container col-8 text-center">
-		{{ include('vehicule_equipement/_form.html.twig') }}
+	<div class="container col-10 text-center">
+		{{ include('vehicule_equipement/_form-add.html.twig') }}
 	</div>
 
 {% endblock %}

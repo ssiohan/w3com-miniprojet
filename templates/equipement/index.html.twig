@@ -11,7 +11,7 @@
 				<th>Id</th>
 				<th>Nom Court</th>
 				<th>Nom Long</th>
-				<th>Poids (kg)</th>
+				<th>Poids (Kg)</th>
 				<th>
 					<form class="text-center" action="{{ path('equipement_new') }}" method="post">
 						<button type="submit" class="btn btn-success">
@@ -22,7 +22,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			{% for equipement in equipements %}
+			{% for equipement in equipements|sort((a, b) => a.poids <=> b.poids) %}
 				<tr>
 					<td>{{ equipement.id }}</td>
 					<td>{{ equipement.nomCourt }}</td>
