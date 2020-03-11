@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des équipements
+{% endblock %}
+
+{% block body %}
+	<h1 class="alert alert-info text-center">Liste des équipements</h1>
+	<table class="table text-center">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Nom Court</th>
+				<th>Nom Long</th>
+				<th>Poids (Kg)</th>
+				<th>
+					<form class="text-center" action="{{ path('equipement_new') }}" method="post">
+						<button type="submit" class="btn btn-success">
+							<i class="fa fa-plus fa-lg"></i>
+						</button>
+					</form>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for equipement in equipements|sort((a, b) => a.poids <=> b.poids) %}
+				<tr>
+					<td>{{ equipement.id }}</td>
+					<td>{{ equipement.nomCourt }}</td>
+					<td>{{ equipement.nomLong }}</td>
+					<td>{{ equipement.poids }}</td>
+					<td class="d-flex justify-content-center">
+						<a href="{{ path('equipement_show', {'id': equipement.id}) }}" class="btn btn-info mr-2">
+							<i class="fa fa-eye fa-lg" aria-hidden="true"></i>
+						</a>
+						<a href="{{ path('equipement_edit', {'id': equipement.id}) }}" class="btn btn-warning mr-2">
+							<i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+						</a>
+						<form action="{{ path('equipement_delete', {'id': equipement.id}) }}" method="post">
+							<button type="submit" class="btn btn-danger">
+								<i class="fa fa-trash fa-lg"></i>
+							</button>
+						</form>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="5" class="alert alert-danger">Aucun équipement trouvé !</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

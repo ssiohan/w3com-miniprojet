@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition du véhicule
+{% endblock %}
+
+{% block body %}
+	<h1 class="alert alert-info text-center">Edition du véhicule</h1>
+
+	<div class="container col-8 text-center">
+		{% include "vehicule/_form.html.twig" %}
+	</div>
+
+	<h3 class="alert alert-secondary text-center d-flex justify-content-center">Equipements présents</h3>
+	<table class="table text-center">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Nom court</th>
+				<th>Nom long</th>
+				<th>Poids (Kg)</th>
+				<th>
+					<form class="text-center" action="{{ path('vehicule_equipement_new', {'vehiculeId': vehicule.id}) }}" method="post">
+						<button type="submit" class="btn btn-success">
+							<i class="fa fa-plus fa-lg"></i>
+						</button>
+					</form>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for equipement in equipements|sort((a, b) => a.poids <=> b.poids) %}
+				<tr>
+					<td>{{ equipement.equipement.id }}</td>
+					<td>{{ equipement.equipement.nomCourt }}</td>
+					<td>{{ equipement.nomLong }}</td>
+					<td>{{ equipement.poids }}</td>
+					<td class="d-flex justify-content-center">
+						<a href="{{ path('vehicule_equipement_edit', {'vehicule': vehicule.id, 'equipement': equipement.equipement.id}) }}" class="btn btn-warning mr-2">
+							<i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+						</a>
+						<form action="{{ path('vehicule_equipement_delete', {'equipement': equipement.equipement.id, 'vehicule': vehicule.id}) }}" method="post">
+							<button type="submit" class="btn btn-danger">
+								<i class="fa fa-trash"></i>
+							</button>
+						</form>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="6" class="alert alert-warning">Aucun équipement présent sur ce véhicule !</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+{% endblock %}

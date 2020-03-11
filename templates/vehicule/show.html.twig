@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du véhicule
+{% endblock %}
+
+{% block body %}
+	<h1 class="alert alert-info text-center">Détails du véhicule</h1>
+	<div class="d-flex justify-content-center m-3">
+		<a href="{{ path('vehicule_index') }}" class="btn btn-info mr-2">
+			<i class="fa fa-arrow-left" aria-hidden="true"></i>
+		</a>
+		<a href="{{ path('vehicule_edit', {'id': vehicule.id}) }}" class="btn btn-warning mr-2">
+			<i class="fa fa-pencil" aria-hidden="true"></i>
+		</a>
+		<form action="{{ path('vehicule_delete', {'id': vehicule.id}) }}" method="post">
+			<button type="submit" class="btn btn-danger">
+				<i class="fa fa-trash"></i>
+			</button>
+		</form>
+	</div>
+	<table class="table d-flex justify-content-center">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ vehicule.id }}</td>
+			</tr>
+			<tr>
+				<th>Immat</th>
+				<td>{{ vehicule.immat }}</td>
+			</tr>
+			<tr>
+				<th>Marque</th>
+				<td>{{ vehicule.marque }}</td>
+			</tr>
+			<tr>
+				<th>Modele</th>
+				<td>{{ vehicule.modele }}</td>
+			</tr>
+			<tr>
+				<th>Couleur</th>
+				<td>{{ vehicule.couleur }}</td>
+			</tr>
+		</tbody>
+	</table>
+	<h3 class="alert alert-secondary text-center">Equipements présents sur ce véhicule</h3>
+	<table class="table text-center">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Nom court</th>
+				<th>Nom long</th>
+				<th>Poids (Kg)</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for equipement in equipements|sort((a, b) => a.poids <=> b.poids) %}
+				<tr>
+					<td>{{ equipement.equipement.id }}</td>
+					<td>{{ equipement.equipement.nomCourt }}</td>
+					<td>{{ equipement.nomLong }}</td>
+					<td>{{ equipement.poids }}</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="6" class="alert alert-warning">Aucun équipement présent sur ce véhicule !</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

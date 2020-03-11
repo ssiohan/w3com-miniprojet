@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvel équipement{% endblock %}
+
+{% block body %}
+	<h1 class="alert alert-info text-center">Ajout d'un équipement</h1>
+
+	<div class="container col-8 text-center">
+		{% include "equipement/_form.html.twig" %}
+	</div>
+
+{% endblock %}
