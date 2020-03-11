@@ -5,7 +5,18 @@
 
 {% block body %}
 	<h1 class="alert alert-info text-center">Ajout d'un équipement sur le véhicule</h1>
-
-	{{ include('vehicule_equipement/_form.html.twig') }}
+	{% for message in app.flashes('alert') %}
+		<div class="flash-alert alert alert-danger text-center">
+			{{ message }}
+		</div>
+	{% endfor %}
+	{% for message in app.flashes('success') %}
+		<div class="flash-alert alert alert-success text-center">
+			{{ message }}
+		</div>
+	{% endfor %}
+	<div class="container col-8 text-center">
+		{{ include('vehicule_equipement/_form.html.twig') }}
+	</div>
 
 {% endblock %}

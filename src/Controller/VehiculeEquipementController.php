@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Equipement;
+use App\Entity\Vehicule;
 use App\Entity\VehiculeEquipement;
 use App\Form\VehiculeEquipementType;
 use App\Repository\VehiculeEquipementRepository;
@@ -26,22 +28,44 @@ class VehiculeEquipementController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="vehicule_equipement_new", methods={"POST"})
+     * @Route("/new/{vehiculeId}", name="vehicule_equipement_new", methods={"POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, $vehiculeId): Response
     {
         $vehiculeEquipement = new VehiculeEquipement();
         $form = $this->createForm(VehiculeEquipementType::class, $vehiculeEquipement);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($vehiculeEquipement);
-            $entityManager->flush();
+            $em = $this->getDoctrine()->getManager();
 
-            return $this->redirectToRoute('vehicule_equipement_index');
+            if (($em->getRepository(VehiculeEquipement::class)->findOneBy([
+                'vehicule' => $vehiculeId,
+                'equipement' => $vehiculeEquipement->getEquipement()->getId()
+            ])) !== null) {
+                $this->addFlash('alert', 'Ce véhicule possède déjà cet équipement !');
+                return $this->render('vehicule_equipement/new.html.twig', [
+                    'vehicule_equipement' => $vehiculeEquipement,
+                    'form' => $form->createView(),
+                ]);
+            } else {
+                // On affecte à le vehicule actuellement modifié à $vehiculeEquipement
+                $vehicule = $em->getRepository(Vehicule::class)->findOneBy([
+                    'id' => $vehiculeId
+                ]);
+                $vehiculeEquipement->setVehicule($vehicule);
+
+                // On affecte ne nouvel équipement selectionné à $vehiculeEquipement
+                $equipement = $em->getRepository(Equipement::class)->findOneBy([
+                    'id' => $vehiculeEquipement->getEquipement()->getId()
+                ]);
+                $vehiculeEquipement->setEquipement($equipement);
+                $em->persist($vehiculeEquipement);
+                $em->flush();
+
+                $this->addFlash('success', 'Cet équipement a bien été ajouté !');
+            }
         }
-
         return $this->render('vehicule_equipement/new.html.twig', [
             'vehicule_equipement' => $vehiculeEquipement,
             'form' => $form->createView(),
@@ -84,14 +108,16 @@ class VehiculeEquipementController extends AbstractController
     public function delete($vehicule, $equipement): Response
     {
         $em = $this->getDoctrine()->getManager();
-        $equipementToDelete = 
-        $em->getRepository(VehiculeEquipement::class)->findOneBy([
-            'vehicule' => $vehicule,
-            'equipement' => $equipement
+        $equipementToDelete =
+            $em->getRepository(VehiculeEquipement::class)->findOneBy([
+                'vehicule' => $vehicule,
+                'equipement' => $equipement
             ]);
         $em->remove($equipementToDelete);
         $em->flush();
 
-        return $this->redirectToRoute('vehicule_equipement_index');
+        return $this->redirectToRoute('vehicule_edit',
+        ['id' => $vehicule]
+    );
     }
 }
