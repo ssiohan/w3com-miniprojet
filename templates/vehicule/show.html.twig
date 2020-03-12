@@ -7,14 +7,14 @@
 	<h1 class="alert alert-info text-center">Détails du véhicule</h1>
 	<div class="d-flex justify-content-center m-3">
 		<a href="{{ path('vehicule_index') }}" class="btn btn-info mr-2">
-			<i class="fa fa-arrow-left" aria-hidden="true"></i>
+			<i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
 		</a>
 		<a href="{{ path('vehicule_edit', {'id': vehicule.id}) }}" class="btn btn-warning mr-2">
-			<i class="fa fa-pencil" aria-hidden="true"></i>
+			<i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
 		</a>
 		<form action="{{ path('vehicule_delete', {'id': vehicule.id}) }}" method="post">
 			<button type="submit" class="btn btn-danger">
-				<i class="fa fa-trash"></i>
+				<i class="fa fa-trash fa-lg"></i>
 			</button>
 		</form>
 	</div>
