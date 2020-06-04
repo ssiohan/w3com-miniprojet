@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Equipement;
+use App\Entity\VehiculeEquipement;
 use App\Form\EquipementType;
 use App\Repository\EquipementRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -83,9 +84,16 @@ class EquipementController extends AbstractController
      */
     public function delete(Equipement $equipement): Response
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($equipement);
-        $entityManager->flush();
+        $em = $this->getDoctrine()->getManager();
+        // On vérifie que l'équipement n'est installé sur aucun véhicule
+        $vehiculeEquipements = $em->getRepository(VehiculeEquipement::class)->findBy(['equipement' => $equipement->getId()]);
+        // Si il est installé sur des véhicules, on l'enlève des véhicules
+        foreach ($vehiculeEquipements as $equipment) {
+            $em->remove($equipment);
+        }
+        // On peut ensuite supprimer l'équipement vu qu'il n'est plus installé sur aucun véhicule'
+        $em->remove($equipement);
+        $em->flush();
 
         return $this->redirectToRoute('equipement_index');
     }

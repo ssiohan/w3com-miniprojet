@@ -84,9 +84,16 @@ class VehiculeController extends AbstractController
      */
     public function delete(Vehicule $vehicule): Response
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($vehicule);
-        $entityManager->flush();
+        $em = $this->getDoctrine()->getManager();
+        // On vérifie que le véhicule ne possède pas d'équipements
+        $vehiculeEquipements = $em->getRepository(VehiculeEquipement::class)->findBy(['vehicule' => $vehicule->getId()]);
+        // Si il y a des equipements, on supprime chaque équipement du véhicule avant de supprimer le véhicule
+        foreach ($vehiculeEquipements as $equipment) {
+            $em->remove($equipment);
+        }
+        // On peut ensuite supprimer le véhicule sans problème
+        $em->remove($vehicule);
+        $em->flush();
 
         return $this->redirectToRoute('vehicule_index');
     }
@@ -94,8 +101,7 @@ class VehiculeController extends AbstractController
     public function getVehiculeEquipements($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $vehiculeEquipements =
-            $em->getRepository(VehiculeEquipement::class)->findBy(['vehicule' => $id]);
+        $vehiculeEquipements = $em->getRepository(VehiculeEquipement::class)->findBy(['vehicule' => $id]);
 
         return $vehiculeEquipements;
     }
