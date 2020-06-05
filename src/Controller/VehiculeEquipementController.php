@@ -12,12 +12,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Préfixe les routes de toutes les méthodes de la classe
  * @Route("/vehicule/equipement", name="vehicule_equipement_")
  */
 class VehiculeEquipementController extends AbstractController
 {
     /**
+     * Préfixe les routes de toutes les méthodes de la classe
      * @Route("/new/{vehiculeId}", name="new", methods={"POST"})
      */
     public function new(Request $request, $vehiculeId): Response
@@ -63,7 +63,7 @@ class VehiculeEquipementController extends AbstractController
     }
 
     /**
-     * @Route("/{vehiculeId}", name="show", methods={"GET"})
+     * @Route("/{vehicule}", name="show", methods={"GET"})
      */
     public function show(VehiculeEquipement $vehiculeEquipement): Response
     {
@@ -73,7 +73,7 @@ class VehiculeEquipementController extends AbstractController
     }
 
     /**
-     * @Route("/{vehiculeId}/edit/{equipementId}", name="edit", methods={"GET","POST"})
+     * @Route("/{vehicule}/edit/{equipement}", name="edit", methods={"GET","POST"})
      */
     public function edit(Request $request, VehiculeEquipement $vehiculeEquipement, $equipement, $vehicule): Response
     {
@@ -101,7 +101,7 @@ class VehiculeEquipementController extends AbstractController
     }
 
     /**
-     * @Route("/{vehiculeId}/{equipementId}/delete", name="delete", methods={"POST"})
+     * @Route("/{vehicule}/{equipement}/delete", name="delete", methods={"POST"})
      */
     public function delete($vehicule, $equipement): Response
     {

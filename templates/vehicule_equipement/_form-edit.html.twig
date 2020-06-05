@@ -1,6 +1,4 @@
 {{ form_start(form) }}
-{# {{ form_label(form.equipement, 'Selectionnez un équipement dans la liste puis validez pour l\'ajouter au véhicule') }}
-{{ form_widget(form.equipement, {'attr': {'class': 'text-center mb-3'}}) }} #}
 {% do form.equipement.setRendered() %}
 {{ form_label(form.nomLong, 'Nom long') }}
 {{ form_widget(form.nomLong, {'attr': {'class': 'text-center mb-3'}}) }}
