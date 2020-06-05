@@ -17,6 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class EquipementController extends AbstractController
 {
     /**
+     * Liste tous les équipements
      * @Route("/", name="equipement_index", methods={"GET"})
      */
     public function index(EquipementRepository $equipementRepository): Response
@@ -27,6 +28,7 @@ class EquipementController extends AbstractController
     }
 
     /**
+     * Ajoute un équipement
      * @Route("/new", name="equipement_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
@@ -50,6 +52,7 @@ class EquipementController extends AbstractController
     }
 
     /**
+     * Visualise un équipement
      * @Route("/{id}", name="equipement_show", methods={"GET"})
      */
     public function show(Equipement $equipement): Response
@@ -60,6 +63,7 @@ class EquipementController extends AbstractController
     }
 
     /**
+     * Edite un équipement
      * @Route("/{id}/edit", name="equipement_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Equipement $equipement): Response
@@ -80,21 +84,33 @@ class EquipementController extends AbstractController
     }
 
     /**
+     * Supprime un équipement
      * @Route("/{id}/delete", name="equipement_delete", methods={"POST"})
      */
     public function delete(Equipement $equipement): Response
     {
         $em = $this->getDoctrine()->getManager();
         // On vérifie que l'équipement n'est installé sur aucun véhicule
-        $vehiculeEquipements = $em->getRepository(VehiculeEquipement::class)->findBy(['equipement' => $equipement->getId()]);
-        // Si il est installé sur des véhicules, on l'enlève des véhicules
-        foreach ($vehiculeEquipements as $equipment) {
-            $em->remove($equipment);
+        $equipementVehicules = $this->getEquipementVehicules($equipement->getId());
+        // S'il est installé sur des véhicules, on l'enlève des véhicules
+        foreach ($equipementVehicules as $equipementVehicule) {
+            $em->remove($equipementVehicule);
         }
-        // On peut ensuite supprimer l'équipement vu qu'il n'est plus installé sur aucun véhicule'
+        // On peut ensuite supprimer l'équipement vu qu'il n'est plus installé sur aucun véhicule
         $em->remove($equipement);
         $em->flush();
 
         return $this->redirectToRoute('equipement_index');
+    }
+
+    /**
+     * Récupère tous les véhicules possédant l'équipement dont l'id est fourni
+     */
+    public function getEquipementVehicules($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $equipementVehicules = $em->getRepository(VehiculeEquipement::class)->findBy(['equipement' => $id]);
+
+        return $equipementVehicules;
     }
 }

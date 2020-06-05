@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class VehiculeController extends AbstractController
 {
     /**
+     * Liste tous les véhicules
      * @Route("/", name="vehicule_index", methods={"GET"})
      */
     public function index(VehiculeRepository $vehiculeRepository): Response
@@ -24,6 +25,7 @@ class VehiculeController extends AbstractController
     }
 
     /**
+     * Ajoute un nouveau véhicule
      * @Route("/new", name="vehicule_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
@@ -47,6 +49,7 @@ class VehiculeController extends AbstractController
     }
 
     /**
+     * Visualise un véhicule
      * @Route("/vehicule/{id}", name="vehicule_show", methods={"GET"})
      */
     public function show(Vehicule $vehicule, $id): Response
@@ -58,6 +61,7 @@ class VehiculeController extends AbstractController
     }
 
     /**
+     * Edite un véhicule
      * @Route("/vehicule/{id}/edit", name="vehicule_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Vehicule $vehicule, $id): Response
@@ -80,16 +84,17 @@ class VehiculeController extends AbstractController
     }
 
     /**
+     * Supprime un véhicule
      * @Route("/vehicule/{id}/delete", name="vehicule_delete", methods={"POST"})
      */
     public function delete(Vehicule $vehicule): Response
     {
         $em = $this->getDoctrine()->getManager();
         // On vérifie que le véhicule ne possède pas d'équipements
-        $vehiculeEquipements = $em->getRepository(VehiculeEquipement::class)->findBy(['vehicule' => $vehicule->getId()]);
-        // Si il y a des equipements, on supprime chaque équipement du véhicule avant de supprimer le véhicule
-        foreach ($vehiculeEquipements as $equipment) {
-            $em->remove($equipment);
+        $vehiculeEquipements = $this->getVehiculeEquipements($vehicule->getId());
+        // Si il y a des equipements, on les supprime du véhicule
+        foreach ($vehiculeEquipements as $vehiculeEquipment) {
+            $em->remove($vehiculeEquipment);
         }
         // On peut ensuite supprimer le véhicule sans problème
         $em->remove($vehicule);
@@ -98,6 +103,9 @@ class VehiculeController extends AbstractController
         return $this->redirectToRoute('vehicule_index');
     }
 
+    /**
+     * Récupère tous les équipements du véhicule dont l'id est fourni
+     */
     public function getVehiculeEquipements($id)
     {
         $em = $this->getDoctrine()->getManager();
