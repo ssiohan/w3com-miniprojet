@@ -12,13 +12,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/equipement")
+ * @Route("/equipement", name="equipement_")
  */
 class EquipementController extends AbstractController
 {
     /**
      * Liste tous les équipements
-     * @Route("/", name="equipement_index", methods={"GET"})
+     * @Route("/", name="index", methods={"GET"})
      */
     public function index(EquipementRepository $equipementRepository): Response
     {
@@ -29,7 +29,7 @@ class EquipementController extends AbstractController
 
     /**
      * Ajoute un équipement
-     * @Route("/new", name="equipement_new", methods={"GET","POST"})
+     * @Route("/new", name="new", methods={"POST"})
      */
     public function new(Request $request): Response
     {
@@ -53,7 +53,7 @@ class EquipementController extends AbstractController
 
     /**
      * Visualise un équipement
-     * @Route("/{id}", name="equipement_show", methods={"GET"})
+     * @Route("/{id}", name="show", methods={"GET"})
      */
     public function show(Equipement $equipement): Response
     {
@@ -64,7 +64,7 @@ class EquipementController extends AbstractController
 
     /**
      * Edite un équipement
-     * @Route("/{id}/edit", name="equipement_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Equipement $equipement): Response
     {
@@ -85,7 +85,7 @@ class EquipementController extends AbstractController
 
     /**
      * Supprime un équipement
-     * @Route("/{id}/delete", name="equipement_delete", methods={"POST"})
+     * @Route("/{id}/delete", name="delete", methods={"POST"})
      */
     public function delete(Equipement $equipement): Response
     {
