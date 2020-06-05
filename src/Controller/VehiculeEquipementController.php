@@ -6,29 +6,19 @@ use App\Entity\Equipement;
 use App\Entity\Vehicule;
 use App\Entity\VehiculeEquipement;
 use App\Form\VehiculeEquipementType;
-use App\Repository\VehiculeEquipementRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/vehicule/equipement")
+ * Préfixe les routes de toutes les méthodes de la classe
+ * @Route("/vehicule/equipement", name="vehicule_equipement_")
  */
 class VehiculeEquipementController extends AbstractController
 {
     /**
-     * @Route("/", name="vehicule_equipement_index", methods={"GET"})
-     */
-    public function index(VehiculeEquipementRepository $vehiculeEquipementRepository): Response
-    {
-        return $this->render('vehicule_equipement/index.html.twig', [
-            'vehicule_equipements' => $vehiculeEquipementRepository->findAll(),
-        ]);
-    }
-
-    /**
-     * @Route("/new/{vehiculeId}", name="vehicule_equipement_new", methods={"POST"})
+     * @Route("/new/{vehiculeId}", name="new", methods={"POST"})
      */
     public function new(Request $request, $vehiculeId): Response
     {
@@ -73,7 +63,7 @@ class VehiculeEquipementController extends AbstractController
     }
 
     /**
-     * @Route("/{vehicule}", name="vehicule_equipement_show", methods={"GET"})
+     * @Route("/{vehiculeId}", name="show", methods={"GET"})
      */
     public function show(VehiculeEquipement $vehiculeEquipement): Response
     {
@@ -83,7 +73,7 @@ class VehiculeEquipementController extends AbstractController
     }
 
     /**
-     * @Route("/{vehicule}/edit/{equipement}", name="vehicule_equipement_edit", methods={"GET","POST"})
+     * @Route("/{vehiculeId}/edit/{equipementId}", name="edit", methods={"GET","POST"})
      */
     public function edit(Request $request, VehiculeEquipement $vehiculeEquipement, $equipement, $vehicule): Response
     {
@@ -111,7 +101,7 @@ class VehiculeEquipementController extends AbstractController
     }
 
     /**
-     * @Route("/{vehicule}/{equipement}/delete", name="vehicule_equipement_delete", methods={"POST"})
+     * @Route("/{vehiculeId}/{equipementId}/delete", name="delete", methods={"POST"})
      */
     public function delete($vehicule, $equipement): Response
     {
