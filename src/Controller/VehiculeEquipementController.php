@@ -62,17 +62,6 @@ class VehiculeEquipementController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
-    /**
-     * @Route("/{vehicule}", name="show", methods={"GET"})
-     */
-    public function show(VehiculeEquipement $vehiculeEquipement): Response
-    {
-        return $this->render('vehicule_equipement/show.html.twig', [
-            'vehicule_equipement' => $vehiculeEquipement,
-        ]);
-    }
-
     /**
      * @Route("/{vehicule}/edit/{equipement}", name="edit", methods={"GET","POST"})
      */
