@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
+ * Préfixe les routes de toutes les méthodes de la classe
  * @Route("/vehicule/equipement", name="vehicule_equipement_")
  */
 class VehiculeEquipementController extends AbstractController
