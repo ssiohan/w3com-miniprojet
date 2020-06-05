@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 
 /**
- * Liste tous les véhicules
+ * Préfixe les routes de toutes les méthodes de la classe
  * @Route("/vehicule", name="vehicule_")
  */
 class VehiculeController extends AbstractController
